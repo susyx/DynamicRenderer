@@ -1,0 +1,15 @@
+apply plugin: 'java'
+
+jar {
+    manifest {
+        attributes 'Implementation-Class': 'com.suyouxiong.renderer.triangle.TriangleRenderer'
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile project(':renderer-api')
+
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
+}

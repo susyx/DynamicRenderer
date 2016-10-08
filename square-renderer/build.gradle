@@ -1,0 +1,26 @@
+apply plugin: 'java'
+
+jar {
+    manifest {
+        attributes 'Implementation-Class': 'com.suyouxiong.renderer.square.SquareRenderer'
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile project(':renderer-api')
+
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
+}
+
+def assembleTask = project.getTasksByName('assemble', false).find {true}
+assembleTask.doLast {
+    def androidHome = System.getenv()['ANDROID_HOME']
+    def jarPath = "$buildDir/libs/" + project.name;
+    println(androidHome)
+    println(jarPath)
+    def dexJarCommand = "${androidHome}/build-tools/23.0.3/dx --dex --output=${jarPath}-dex.jar ${jarPath}.jar"
+    println(dexJarCommand)
+    dexJarCommand.execute()
+}
